@@ -1,0 +1,29 @@
+# byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# tests and coverage
+*.pytest_cache
+.coverage
+
+# database & logs
+*.db
+*.sqlite3
+*.log
+
+# venv
+env
+venv
+.venv
+
+# other
+.DS_Store
+.idea
+
+# javascript
+package-lock.json
+
+# static files, except .gitkeep, for the directory to appear
+staticfiles/*
+!staticfiles/.gitkeep 
+.vscode/symbols.json
