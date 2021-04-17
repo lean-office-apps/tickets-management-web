@@ -13,6 +13,7 @@ from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
 
+
 def login_view(request):
     form = LoginForm(request.POST or None)
 
@@ -33,6 +34,7 @@ def login_view(request):
             msg = 'Error validating the form'    
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
+
 
 def register_user(request):
 
@@ -57,4 +59,4 @@ def register_user(request):
     else:
         form = SignUpForm()
 
-    return render(request, "accounts/register.html", {"form": form, "msg" : msg, "success" : success })
+    return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
