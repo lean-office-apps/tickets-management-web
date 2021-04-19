@@ -49,7 +49,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"   # Route defined in app/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
-TEMPLATE_DIR = os.path.join(CORE_DIR, "core/templates")  # ROOT dir for templates
+TEMPLATE_DIR = os.path.join(CORE_DIR, "public/templates/")  # ROOT dir for templates
 
 TEMPLATES = [
     {
@@ -121,7 +121,7 @@ STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(CORE_DIR, 'core/static'),
+    os.path.join(CORE_DIR, 'public/static/'),
 )
 #############################################################
 #############################################################
