@@ -24,6 +24,11 @@ venv
 package-lock.json
 
 # static files, except .gitkeep, for the directory to appear
+<<<<<<< HEAD
 public/staticfiles/*
 !public/staticfiles/.gitkeep
+=======
+project/staticfiles/*
+!project/staticfiles/.gitkeep
+>>>>>>> develop
 .vscode/symbols.json
