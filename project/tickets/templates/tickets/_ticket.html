@@ -1,0 +1,16 @@
+<div class="media">
+
+	<div class="media-body">
+		<strong>{{ ticket.id }}</strong>
+		<h5>Ticket summary: {{ ticket.summary }}</h5>
+		<h5>Ticket description:{{ ticket.description }}</h5>
+		<h5>Ticket created: {{ ticket.created_on }}</h5>
+
+		<div class="media-footer">
+				<a href="#" title="delete" class="btn btn-simple">
+					<span class="fa fa-remove text-danger" aria-hidden="true"></span>
+					<span class="text-danger icon-label">Delete</span>
+				</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} List of tickets {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="col-md-8">
+	{% for ticket in ticket_list %}
+  {% include "tickets/_ticket.html" %}
+	{% endfor %}
+</div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

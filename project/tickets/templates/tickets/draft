@@ -1,0 +1,15 @@
+<!--						<div class="row">-->
+<!--							<div class="col-md-6">-->
+<!--								<input type="text" class="form-control" placeholder="Enter your name here" id="charFieldAuthorName" />-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="row">-->
+<!--							<div class="col-md-6">-->
+<!--								<input type="text" class="form-control" placeholder="Enter a summary of the ticket (max. 100 characters)" id="charFieldTicketSummary" />-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="row">-->
+<!--							<div class="col-md-6">-->
+<!--								<textarea class="form-control" id="textAreaTicketDescription" rows="4" placeholder="Write an accurate description of your issue here (max. 250 words please)"></textarea>-->
+<!--							</div>-->
+<!--						</div>-->
