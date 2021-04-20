@@ -1,0 +1,36 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block title %} Create new ticket {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<link href="{% static 'assets/css/dashboard-free.min.css' %}" rel="stylesheet" />
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+			<h4>Create New Ticket</h4>
+			<div class="tab-content">
+				<div id="inputs-component" class="tab-pane tab-example-result fade show active" role="tabpanel" aria-labelledby="inputs-component-tab">
+					<form method="POST" action="{% url 'tickets:create' %}" id="ticketForm">
+						{% csrf_token %}
+						{{ form.as_p }}
+
+
+						<input type="submit" class="btn btn-primary btn-large" value="Save" />
+
+					</form>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+
+
