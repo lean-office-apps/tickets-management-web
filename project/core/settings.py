@@ -5,9 +5,12 @@ from decouple import config
 from unipath import Path
 import dj_database_url
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = Path(__file__).parent
-CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).ancestor(3)   # Path to parent folder of 'project'
+PROJECT_DIR = Path(__file__).ancestor(2)  # Path to folder 'project' (django project dir)
+CORE_DIR = Path(__file__).parent  # Path to folder 'core'
+PUBLIC_DIR = os.path.join(PROJECT_DIR, "public")  # Path to 'public' folder
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
@@ -22,7 +25,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"   # Route defined in app/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
-TEMPLATE_DIR = os.path.join(CORE_DIR, "core/templates")  # ROOT dir for templates
+TEMPLATE_DIR = os.path.join(PROJECT_DIR, "public", "templates")  # ROOT dir for templates
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -120,7 +123,7 @@ STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(CORE_DIR, 'public/static/'),
+    os.path.join(PUBLIC_DIR, 'static/'),
 )
 #############################################################
 #############################################################
