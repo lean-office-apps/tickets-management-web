@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'app',  # Enable the inner app
+    'groups',
     'monitoring',
     'workflows',
     'tickets',
