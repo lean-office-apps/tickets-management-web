@@ -26,6 +26,7 @@ ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"   # Route defined in app/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
 TEMPLATE_DIR = os.path.join(PROJECT_DIR, "public", "templates")  # ROOT dir for templates
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'authentication',
     'app',  # Enable the inner app
     'monitoring',
     'workflows',
@@ -80,6 +82,9 @@ DATABASES = {
         'NAME'  : 'db.sqlite3',
     }
 }
+
+# Define the custom model user to use
+AUTH_USER_MODEL = 'authentication.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

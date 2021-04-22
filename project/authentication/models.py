@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
+
 import enum
-from datetime import timezone
+from django.utils import timezone
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
@@ -13,10 +11,10 @@ from django.db import models
 
 # Create your domain models here.
 
-
 class RecordStatus(enum.Enum):
     """
     This enum class represents the status of every record in the database.
+    The status can be ACTIVE, DELETED, ACTIVE_LOCKED.
     The default record status for new database entries is ACTIVE.
     """
     ACTIVE = "Active"
@@ -28,8 +26,13 @@ class RecordStatus(enum.Enum):
 
 
 class Gender(enum.Enum):
+    """
+    This enum class represents the gender of users.
+    Can be Male, Female, Other.
+    """
     MALE = "Male"
     FEMALE = "Female"
+    OTHER = "Other"
 
     def __str__(self):
         return self.name
@@ -38,20 +41,43 @@ class Gender(enum.Enum):
 class BaseEntity(models.Model):
     """
     This is the base class from which all database models inherit from.
-    It contains audit trails of database entries.
+    It contains audit trails of database entries:
+    created_on
+    created_by
+    changed_on
+    changed_by
+    record_status
     """
-    created_on = models.DateTimeField(default=timezone.now, null=False)
-    created_by = models.ForeignKey('UserAccount', on_delete=models.PROTECT, null=True, blank=True,
-                                   related_name="%(app_label)s_%(class)s_created_by",
-                                   related_query_name="%(app_label)s_%(class)ss_created_by")
-    changed_on = models.DateTimeField(default=timezone.now, null=True)
-    changed_by = models.ForeignKey('UserAccount', on_delete=models.PROTECT, null=True, blank=True,
-                                   related_name="%(app_label)s_%(class)s_changed_by",
-                                   related_query_name="%(app_label)s_%(class)ss_changed_by")
-    record_status = models.CharField(null=True, blank=True,
-                                     max_length=255, default=RecordStatus.ACTIVE.name,
-                                     choices=[(record.name, record.value) for record in
-                                              RecordStatus])  # Record Status is a list of Tuple
+    created_on = models.DateTimeField(
+        default=timezone.now,
+        null=False,
+    )
+    created_by = models.ForeignKey(
+        'CustomUser',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="%(app_label)s_%(class)s_created_by",
+        related_query_name="%(app_label)s_%(class)ss_created_by",
+    )
+    changed_on = models.DateTimeField(
+        default=timezone.now,
+        null=True,
+    )
+    changed_by = models.ForeignKey(
+        'CustomUser',
+        on_delete=models.PROTECT,
+        null=True, blank=True,
+        related_name="%(app_label)s_%(class)s_changed_by",
+        related_query_name="%(app_label)s_%(class)ss_changed_by",
+    )
+    record_status = models.CharField(
+        null=True,
+        blank=True,
+        max_length=255,
+        default=RecordStatus.ACTIVE.name,
+        choices=[(record.name, record.value) for record in RecordStatus],
+    )  # Record Status is a list of Tuple
 
     @property
     def __view_edit__(self):
@@ -62,8 +88,13 @@ class BaseEntity(models.Model):
 
 
 class AccountManager(BaseUserManager):
-    """
+    """ Extend BaseUserManager to cater for the custom user model.
+
+    Define 3 methods: create_user(), create_superuser(), validate_user_details()
+
     Ref: https://docs.djangoproject.com/en/3.2/topics/auth/customizing/
+    Ref: for link specific to the manager for a custom user model:
+    https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#writing-a-manager-for-a-custom-user-model
 
     AbstractBaseUser and BaseUserManager are importable from django.contrib.auth.base_user so that
     they can be imported without including django.contrib.auth in INSTALLED_APPS.
@@ -78,7 +109,7 @@ class AccountManager(BaseUserManager):
     BaseUserManager provides the following utility methods:
 
     class models.BaseUserManager
-        classmethod normalize_email(email)
+        class method normalize_email(email)
             Normalizes email addresses by lowercasing the domain portion of the email address.
 
         get_by_natural_key(username)
@@ -93,7 +124,8 @@ class AccountManager(BaseUserManager):
     """
 
     def create_user(self, first_name: str, email: str, username: str, phone_number: str, password: str = None):
-        """
+        """ Create superuser based on the custom user model.
+
         The prototype of create_user() should accept the username field, plus all required fields as arguments.
         For example, if your user model uses email as the username field, and has date_of_birth as a required field,
         then create_user should be defined as:
@@ -114,13 +146,15 @@ class AccountManager(BaseUserManager):
             first_name=first_name,
             phone_number=phone_number,
             email=self.normalize_email(email),
-            username=username)
+            username=username,
+        )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, first_name: str, email: str, username: str, phone_number: str, password: str = None):
-        """
+        """ Create superuser based on the custom user model.
+
         The prototype of create_superuser() should accept the username field, plus all required fields as arguments.
         For example, if your user model uses email as the username field, and has date_of_birth as a required field,
         then create_superuser should be defined as:
@@ -142,23 +176,24 @@ class AccountManager(BaseUserManager):
             phone_number=phone_number,
             email=self.normalize_email(email),
             username=username,
-            password=password)
+            password=password,
+        )
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
 
-    def validate_user_details(self, email: str, first_name: str, username: str, phone_number: str):
-        """
-        Validate all required user details.
-
+    @staticmethod
+    def validate_user_details(email: str, first_name: str, username: str, phone_number: str):
+        """ Validate all required user details.
 
         :param email:
         :param first_name:
         :param username:
         :param phone_number:
-        :return:
+        :return: noting
+        :raises ValueError: when anyone of first_name, username, email, phone_number is missing
         """
         if not first_name:
             raise ValueError("User must have a first name")
@@ -170,9 +205,14 @@ class AccountManager(BaseUserManager):
             raise ValueError("User must have a phone number")
 
 
-class UserAccount(AbstractBaseUser, PermissionsMixin, BaseEntity):
-    """
-    This class is an override of the default Django user model.
+class CustomUser(AbstractBaseUser, PermissionsMixin, BaseEntity):
+    """ Overrides the default Django user model.
+
+    Attributes:
+        Django mandatory attributes:
+            email, username, date_joined, last_login, is_active, is_admin, is_superuser, is_staff
+        Non-mandatory attributes:
+            first_name, last_name, gender, phone_number
     """
     # Start of mandatory attributes required when overriding the default django model
     email = models.EmailField(max_length=255, null=True, blank=True)
@@ -187,11 +227,16 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, BaseEntity):
 
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
-    gender = models.CharField(null=True, blank=True, max_length=255, default=None,
-                              choices=[(record.name, record.value) for record in Gender])
+    gender = models.CharField(
+        null=True, blank=True,
+        max_length=255,
+        default=None,
+        choices=[(record.name, record.value) for record in Gender]
+    )
     phone_number = models.CharField(max_length=255, null=True, blank=True)
 
     USERNAME_FIELD = 'username'
+    EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'phone_number', 'email']  # List of all required fields including the username
     objects = AccountManager()
 
@@ -214,10 +259,12 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, BaseEntity):
         db_table = 'users'
         ordering = ('first_name', 'last_name', 'username', 'email')
         default_permissions = ()
-        permissions = (('custom_view_security_menu', 'View Security Menu'),
-                       ('custom_add_user', 'Add User'),
-                       ('custom_edit_user', 'Edit User'),
-                       ('custom_view_users', 'View Users'),
-                       ('custom_add_role', 'Add Role'),
-                       ('custom_edit_role', 'Edit Role'),
-                       ('custom_view_roles', 'View Roles'))
+        permissions = (
+            ('custom_view_security_menu', 'View Security Menu'),
+            ('custom_add_user', 'Add User'),
+            ('custom_edit_user', 'Edit User'),
+            ('custom_view_users', 'View Users'),
+            ('custom_add_role', 'Add Role'),
+            ('custom_edit_role', 'Edit Role'),
+            ('custom_view_roles', 'View Roles'),
+        )
