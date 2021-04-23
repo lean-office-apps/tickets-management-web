@@ -3,14 +3,10 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from django.shortcuts import render
-
+from django.contrib.auth import authenticate, login
 # Create your views here.
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
-from django.forms.utils import ErrorList
-from django.http import HttpResponse
+
 from .forms import LoginForm, SignUpForm
 
 
