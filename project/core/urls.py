@@ -11,7 +11,7 @@ urlpatterns = [
     path('tickets/', include('tickets.urls')),  # Ticket routes - Create, list, detail
     path("", include("authentication.urls")),   # Auth routes - login / register
     path('groups/', include('groups.url')),     # Grouping of tickets and users (group, project)
-    #path("", include("app.urls")),              # UI Kits Html files
+    path("", include("app.urls")),              # UI Kits Html files
 ]
 
 # Required to use the django debug toolbar
