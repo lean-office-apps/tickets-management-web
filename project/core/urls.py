@@ -11,8 +11,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),  # Django admin route
     path('tickets/', include('tickets.urls')),  # Ticket routes - Create, list, detail
-    path("", include("accounts.urls")),   # Auth routes - login / register
-    path("", include("app.urls")),              # UI Kits Html files
+    path("", include("accounts.urls")),              # UI Kits Html files
 ]
 
 # Required to use the django debug toolbar
