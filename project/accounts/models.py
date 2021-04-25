@@ -1,13 +1,11 @@
-from django.db import models
-
-# Create your models here.
-
 import enum
+
 from django.utils import timezone
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+
 from django.db import models
 
 

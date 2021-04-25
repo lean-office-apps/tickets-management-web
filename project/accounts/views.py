@@ -1,8 +1,4 @@
 # -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from django import template
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -10,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
 
-from accounts.forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm
 
 
 # Create your views here.
