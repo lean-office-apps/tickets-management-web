@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'authentication',
     'accounts',  # Enable the inner accounts
     'monitoring',
     'workflows',
@@ -84,7 +83,7 @@ DATABASES = {
 }
 
 # Define the custom model user to use
-AUTH_USER_MODEL = 'authentication.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
