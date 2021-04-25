@@ -23,8 +23,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 
 # Application definition
 ROOT_URLCONF = 'core.urls'
-LOGIN_REDIRECT_URL = "home"   # Route defined in app/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
+LOGIN_REDIRECT_URL = "home"   # Route defined in accounts/urls.py
+LOGOUT_REDIRECT_URL = "home"  # Route defined in accounts/urls.py
 TEMPLATE_DIR = os.path.join(PROJECT_DIR, "public", "templates")  # ROOT dir for templates
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'authentication',
-    'app',  # Enable the inner app
+    'accounts',  # Enable the inner accounts
     'monitoring',
     'workflows',
     'tickets',
