@@ -7,8 +7,9 @@ import dj_database_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = Path(__file__).ancestor(3)   # Path to parent folder of 'project'
+BASE_DIR = Path(__file__).ancestor(2)   # Path to base folder of the django project, relative path are relative to this
 PROJECT_DIR = Path(__file__).ancestor(2)  # Path to folder 'project' (django project dir)
+ROOT_DIR = Path(__file__).ancestor(2)  # Path to parent folder of 'project'
 CORE_DIR = Path(__file__).parent  # Path to folder 'core'
 PUBLIC_DIR = os.path.join(PROJECT_DIR, "public")  # Path to 'public' folder
 
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'appsutils',
     'accounts',  # Enable the inner accounts
     'monitoring',
     'workflows',
