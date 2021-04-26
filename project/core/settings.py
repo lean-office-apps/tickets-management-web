@@ -23,8 +23,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 
 # Application definition
 ROOT_URLCONF = 'core.urls'
-LOGIN_REDIRECT_URL = "home"   # Route defined in app/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
+LOGIN_REDIRECT_URL = "home"   # Route defined in accounts/urls.py
+LOGOUT_REDIRECT_URL = "home"  # Route defined in accounts/urls.py
 TEMPLATE_DIR = os.path.join(PROJECT_DIR, "public", "templates")  # ROOT dir for templates
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -36,9 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'authentication',
     'app',  # Enable the inner app
     'groups',
+    'accounts',  # Enable the inner accounts
     'monitoring',
     'workflows',
     'tickets',
@@ -85,7 +85,7 @@ DATABASES = {
 }
 
 # Define the custom model user to use
-AUTH_USER_MODEL = 'authentication.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
