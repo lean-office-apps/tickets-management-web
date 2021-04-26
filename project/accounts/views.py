@@ -58,6 +58,7 @@ def register_user(request):
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
 
 
+# TODO: move to another app (where? tbd)
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
