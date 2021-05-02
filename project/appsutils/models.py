@@ -1,9 +1,12 @@
 import enum
 
 from django.db import models
+from django.conf import settings
+from django.utils import timezone
 
 # Create your models here.
-from django.utils import timezone
+
+User = settings.AUTH_USER_MODEL
 
 
 class RecordStatus(enum.Enum):
@@ -48,7 +51,7 @@ class BaseEntity(models.Model):
         null=False,
     )
     created_by = models.ForeignKey(
-        'CustomUser',
+        User,
         on_delete=models.PROTECT,
         null=True,
         blank=True,
@@ -60,7 +63,7 @@ class BaseEntity(models.Model):
         null=True,
     )
     changed_by = models.ForeignKey(
-        'CustomUser',
+        User,
         on_delete=models.PROTECT,
         null=True, blank=True,
         related_name="%(app_label)s_%(class)s_changed_by",

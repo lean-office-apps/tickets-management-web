@@ -9,7 +9,7 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).ancestor(2)   # Path to base folder of the django project, relative path are relative to this
 PROJECT_DIR = Path(__file__).ancestor(2)  # Path to folder 'project' (django project dir)
-ROOT_DIR = Path(__file__).ancestor(2)  # Path to parent folder of 'project'
+ROOT_DIR = Path(__file__).ancestor(3)  # Path to parent folder of 'project'
 CORE_DIR = Path(__file__).parent  # Path to folder 'core'
 PUBLIC_DIR = os.path.join(PROJECT_DIR, "public")  # Path to 'public' folder
 
@@ -26,7 +26,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"   # Route defined in accounts/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in accounts/urls.py
-TEMPLATE_DIR = os.path.join(PROJECT_DIR, "public", "templates")  # ROOT dir for templates
+TEMPLATE_DIR = os.path.join(ROOT_DIR, "public", "templates")  # ROOT dir for templates
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = [
@@ -37,13 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'app',  # Enable the inner app
-    'groups',
     'appsutils',
     'accounts',  # Enable the inner accounts
     'monitoring',
     'workflows',
     'tickets',
+    'groups',
+    'comments',
 ]
 
 MIDDLEWARE = [
@@ -86,9 +86,6 @@ DATABASES = {
     }
 }
 
-# Define the custom model user to use
-AUTH_USER_MODEL = 'accounts.CustomUser'
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -107,6 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Define the custom model user to use
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

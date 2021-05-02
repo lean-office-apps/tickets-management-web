@@ -5,14 +5,13 @@ from django.urls import reverse
 
 import misaka
 
+from appsutils.models import BaseEntity
 from groups.models import Group
 
 
 # Create your models here.
-class Ticket(models.Model):
+class Ticket(BaseEntity):
     summary = models.CharField(max_length=100)
-    created_on = models.DateTimeField(auto_now=True)
-    author_name = models.CharField(max_length=100)
     status = models.CharField(max_length=100, default='new')
     description = models.TextField()
     description_html = models.TextField(editable=False)     # For html rendering of the description
@@ -29,4 +28,3 @@ class Ticket(models.Model):
         ordering = ['-created_on']
 
 
-# TODO: create 'comment' model, views and all

@@ -9,8 +9,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),  # Django admin route
     path('tickets/', include('tickets.urls')),  # Ticket routes - Create, list, detail
-    path('groups/', include('groups.url')),     # Grouping of tickets and users (group, project)
-    path("", include("app.urls")),              # UI Kits Html files
+    path('groups/', include('groups.urls')),     # Grouping of tickets and users (group, project)
     path("", include("accounts.urls")),              # UI Kits Html files, Auth routes - login / register
 ]
 
