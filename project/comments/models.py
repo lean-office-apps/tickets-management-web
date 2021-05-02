@@ -12,7 +12,7 @@ from appsutils.models import BaseEntity
 
 class Comment(BaseEntity):
     post = models.ForeignKey(
-        'Ticket',       # TODO: should be updated so that a comment could be added to other models as well
+        'tickets.Ticket',       # TODO: should be updated so that a comment could be added to other models as well
         related_name='comments',
         on_delete=models.CASCADE,
     )
@@ -25,8 +25,9 @@ class Comment(BaseEntity):
         self.approved_comment = True
         self.save()
 
-    def get_absolute_url(self):
-        return reverse("post_list")
+    # TODO: define success url for comment
+    # def get_absolute_url(self):
+    #     return reverse("post_list")
 
     def __str__(self):
         return self.text

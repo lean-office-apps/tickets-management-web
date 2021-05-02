@@ -1,4 +1,4 @@
-# tickets/models.py
+# tickets/base_entity.py
 
 from django.db import models
 from django.urls import reverse
